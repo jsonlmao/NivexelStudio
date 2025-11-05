@@ -10,75 +10,59 @@
 <body>
     <canvas id="particles"></canvas>
     
+    <button class="console-btn" onclick="openConsole()">OPEN CONSOLE</button>
+    
     <div class="content">
         <div class="logo-container">
             <svg viewBox="0 0 1011 980" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Central logo elements -->
                 <path d="M431.38 362.005L388.242 316L405.334 318.403L420.068 319.733L584.375 500.402L662.705 585.689L665.535 616.956L431.38 362.005Z" fill="white"/>
-                
                 <g filter="url(#filter0_d_0_1)">
                     <path d="M443.01 342.031L423.005 319L441.804 322.503L452.768 324.47L500.306 376.23L593.143 477.312L662.678 553.023L665.807 584.616L443.01 342.031Z" fill="white"/>
                 </g>
-                
                 <g filter="url(#filter1_d_0_1)">
                     <path d="M453.947 323L484.746 326.651L489.035 331.321L516.799 361.551L613.74 467.101L664.044 521.873L666.22 552.428L453.947 323Z" fill="white"/>
                 </g>
-                
                 <g filter="url(#filter2_d_0_1)">
                     <path d="M359 389.651V317L371 327.442L376 333.824V561.256V667H359V389.651Z" fill="white"/>
                 </g>
-                
                 <g filter="url(#filter3_d_0_1)">
                     <path d="M659 566.849V639.5L668 631L676 622.676V395.244V289.5H659V566.849Z" fill="white"/>
                 </g>
-                
                 <path d="M379 379.033V321L391 339.667L398 346.926V557.419V685H379V379.033Z" fill="white"/>
                 <path d="M679 566.54V620L689 608L698 598V394.525V271.5H679V566.54Z" fill="white"/>
-                
                 <g filter="url(#filter4_d_0_1)">
                     <path d="M401 373.001V353.363L414 363.878H420V427.851V545.801V678.363H401V373.001Z" fill="white"/>
                 </g>
-                
                 <g filter="url(#filter5_d_0_1)">
                     <path d="M701 570.686V595L713 583L720 576V518.137V405.137V278.137H701V570.686Z" fill="white"/>
                 </g>
-                
                 <g filter="url(#filter6_d_0_1)">
                     <path d="M423 381.814L442 397V408V440.363V553.363V699.5H423V381.814Z" fill="white"/>
                 </g>
-                
                 <g filter="url(#filter7_d_0_1)">
                     <path d="M723 573L742 553.5V548.5V516.137V403.137V257H723V573Z" fill="white"/>
                 </g>
-                
                 <g filter="url(#filter8_d_0_1)">
                     <path d="M415.187 374.043L358.332 312.139L371.675 313.315L384.135 315.015L562.117 508.804L657.39 612.538L658.056 638.483L415.187 374.043Z" fill="white"/>
                 </g>
-                
-                <!-- Rotating cubes with attached lines -->
                 <g class="cube1">
                     <path d="M902.876 268.153L844.835 647.206L547.665 861.765L252.628 647.202L188.137 268.149L545.5 171.036L902.876 268.153Z" stroke="white" stroke-width="2"/>
                     <path class="diag-line-1" d="M545 490L904.055 268.01" stroke="white" stroke-opacity="0.67" stroke-width="2"/>
                     <path class="center-line" d="M546 863L545 490" stroke="white" stroke-opacity="0.67" stroke-width="2"/>
                     <path class="diag-line-2" d="M545 490L188.137 268.149" stroke="white" stroke-opacity="0.67" stroke-width="2"/>
                 </g>
-                
                 <g class="cube2">
                     <path d="M813.711 148.562L883.82 519.466L675.083 817.513L327.22 716.822L141.954 386.749L445.887 177.581L813.711 148.562Z" stroke="white" stroke-opacity="0.5" stroke-width="2"/>
                 </g>
-                
                 <g class="cube3">
                     <path d="M931.024 495.803L661.165 770.023L293.706 771.62L180.1 425.834L350.421 80.3981L697.775 209.198L931.024 495.803Z" stroke="white" stroke-width="2"/>
                 </g>
-                
                 <g class="cube4-poly1">
                     <path opacity="0.5" d="M745.145 846.878L363.344 788.996L147.239 492.659L363.348 198.448L745.15 134.136L842.964 490.5L745.145 846.878Z" stroke="white" stroke-width="2"/>
                 </g>
-                
                 <g class="cube4-poly2">
                     <path d="M897.429 602.072L589.59 794.438L248.781 712.463L216.439 366.783L447.076 85.9395L741.753 283.973L897.429 602.072Z" stroke="white" stroke-opacity="0.5" stroke-width="2"/>
                 </g>
-                
                 <defs>
                     <filter id="filter0_d_0_1" x="419.005" y="319" width="250.802" height="273.616" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
                         <feFlood flood-opacity="0" result="BackgroundImageFix"/>
@@ -175,6 +159,42 @@
         </div>
         
         <div class="status-text">&gt; / Transition Pending...</div>
+    </div>
+
+    <!-- API Key Modal -->
+    <div class="api-modal" id="apiModal">
+        <h2>CREDENTIALS CONFIGURATION</h2>
+        <p style="color: #0f0; margin-bottom: 15px; font-size: 14px;">Enter authentication key to establish connection.</p>
+        <input type="password" id="apiKeyInput" placeholder="Enter Authentication Key">
+        <div>
+            <button onclick="saveApiKey()">SAVE KEY</button>
+            <button onclick="closeApiModal()">CANCEL</button>
+        </div>
+    </div>
+
+    <!-- VHS Console Modal -->
+    <div class="modal-overlay" id="consoleModal">
+        <button class="close-btn" onclick="closeConsole()">CLOSE [ESC]</button>
+        <div class="screen-curve"></div>
+        <div class="stripe-overlay"></div>
+        <div class="vignette"></div>
+        <div class="console" id="console">
+            <div class="line">SYSTEM BOOT SEQUENCE INITIATED...</div>
+            <div class="line">Loading kernel modules... [OK]</div>
+            <div class="line">Initializing VHS display driver... [OK]</div>
+            <div class="line">Memory check: 640KB... [OK]</div>
+            <div class="line">═══════════════════════════════════════</div>
+            <div class="line">WELCOME TO VHS TERMINAL v1.987</div>
+            <div class="line">═══════════════════════════════════════</div>
+            <div class="line">&nbsp;</div>
+            <div class="line">Type 'help' for available commands</div>
+            <div class="line">&nbsp;</div>
+            <div class="input-line">
+                <span>root@vhs:~$ </span>
+                <input type="text" id="commandInput" autocomplete="off">
+                <span class="prompt">_</span>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
