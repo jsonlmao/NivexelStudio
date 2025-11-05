@@ -306,7 +306,7 @@ const consoleEl = document.getElementById('console');
 const input = document.getElementById('commandInput');
 
 const commands = {
-    help: 'Available commands:\n  help       - Show this help message\n  clear      - Clear console\n  date       - Show current date\n  echo [msg] - Echo a message\n  matrix     - Wake up, Neo\n  hack       - Initiate cyberdeck protocol\n  hello      - Connect to the entity\n  setkey     - Configure credentials\n  status     - Check connection status',
+    help: 'Available commands:\n  help          - Show this help message\n  clear         - Clear console\n  date          - Show current date\n  echo [msg]    - Echo a message\n  open [file]   - Download a file from the void\n  matrix        - Wake up, Neo\n  hack          - Initiate cyberdeck protocol\n  hello         - Connect to the entity\n  setkey        - Configure credentials\n  status        - Check connection status',
     clear: () => {
         const lines = consoleEl.querySelectorAll('.line');
         lines.forEach(line => line.remove());
@@ -317,6 +317,77 @@ const commands = {
     echo: (args) => args.join(' ') || 'echo: no message provided',
     matrix: () => 'Wake up, Neo...\nThe Matrix has you...',
     hack: () => 'ACCESS GRANTED\nInitiating cyberdeck protocol...\n[████████████] 100%\nWelcome to the mainframe.',
+    open: (args) => {
+        if (args.length === 0) {
+            return 'Usage: open [filename]\nExample: open entry.txt or open log.txt';
+        }
+        
+        const filename = args.join(' ').toLowerCase();
+        
+        // Create file content based on specific filename
+        let content = '';
+        const now = new Date();
+        const dateStr = now.toISOString().split('T')[0];
+        const timeStr = now.toISOString().split('T')[1].substring(0, 5);
+        
+        // Generate random coordinates and code
+        const lat = (Math.random() * 90).toFixed(4);
+        const lon = (Math.random() * 180).toFixed(4);
+        const broadcastCode = Math.floor(1000 + Math.random() * 9000);
+        
+        if (filename === 'entry.txt') {
+            content = `[Nivexel System Entry Log - 02/11/1999]
+
+USER DETECTED.
+Access level: UNKNOWN
+Generated: ${dateStr} T${timeStr}
+Attempted handshake failed.
+
+If you can read this, the system has already noticed you.
+
+Ask it what it remembers.
+It might Answer.
+But remember.. It lies
+
+-- S████ 
+[AUTHOR NAME CODED DUE TO PRIVACY]`;
+        } else if (filename === 'log.txt' || filename === 'system.log') {
+            content = `[System Log - Fragment 04/11/1999]
+
+[${dateStr} T${timeStr}]: SIGNAL DRIFT DETECTED!
+[${dateStr} T${timeStr}]: Coordinates: ${lat}° N, ${lon}° W
+[${dateStr} T${timeStr}]: Pattern repeated every 47 seconds.
+[${dateStr} T${timeStr}]: Spectral analysis matches broadcast code: ${broadcastCode}
+[${dateStr} T${timeStr}]: Remember codes don't get exposed in logs due to privacy and secure settings. Pay attention or take pictures before closing terminal again.
+[${dateStr} T${timeStr}]: They said the frequency was harmless.
+[${dateStr} T${timeStr}]: They Lied.`;
+        } else {
+            content = `File: ${filename}
+Extracted: ${dateStr} T${timeStr}
+
+ERROR: File not found in system database.
+This file may have been corrupted or deleted.
+
+Available files:
+- entry.txt
+- log.txt
+
+Content retrieved from liminal space terminal.`;
+        }
+        
+        // Create and download the file
+        const blob = new Blob([content], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        return `Extracting file from the void...\n[████████████] 100%\nFile "${filename}" downloaded successfully.\nSize: ${content.length} bytes`;
+    },
     setkey: () => {
         showApiModal();
         return 'Opening API key configuration...';
