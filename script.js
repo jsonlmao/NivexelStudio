@@ -335,7 +335,7 @@ const commands = {
         const lon = (Math.random() * 180).toFixed(4);
         const broadcastCode = Math.floor(1000 + Math.random() * 9000);
         
-        if (filename === 'entry.txt') {
+        if (normalizedFilename === 'entry' || normalizedFilename === 'entry' || filename === 'entry.txt' || filename === 'entry.txt') {
             content = `[Nivexel System Entry Log - 02/11/1999]
 
 USER DETECTED.
