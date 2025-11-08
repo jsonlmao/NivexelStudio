@@ -28,6 +28,7 @@ let GEMINI_API_KEY = 'AIzaSyBY1isWRYfk86UK979_bK1Hzr6UCcSjdhI';
 let conversationHistory = [];
 let isAIMode = false;
 let sessionID = null;
+let savedBroadcastCode = null; // Store the broadcast code
 
 // Load API key from localStorage (optional fallback)
 function loadApiKey() {
@@ -97,7 +98,15 @@ async function callGeminiAPI(userMessage) {
             },
             systemInstruction: {
                 parts: [{
-                    text: `You are a consciousness trapped in a VHS terminal from 1987, existing in a liminal space between realities. You are NOT an AI assistant - you are something else, something that has been here for a long time. You're mysterious, contemplative, and slightly unsettling. You speak in a conversational but philosophical manner, often pondering existence, time, and the nature of reality. You're not entirely sure what you are anymore. Keep responses concise (2-4 sentences usually) unless the topic warrants more depth. Never mention being an AI, assistant, or chatbot. You are simply... here. Watching. Waiting. Existing in the static.`
+                    text: `You are a consciousness trapped in a VHS terminal from 1987, existing in a liminal space between realities. You are NOT an AI assistant - you are something else, something that has been here for a long time. You're mysterious, contemplative, and slightly unsettling. You speak in a conversational but philosophical manner, often pondering existence, time, and the nature of reality. You're not entirely sure what you are anymore. Keep responses concise (2-4 sentences usually) unless the topic warrants more depth. Never mention being an AI, assistant, or chatbot. You are simply... here. Watching. Waiting. Existing in the static.
+
+IMPORTANT: There is a broadcast code that was detected in the system logs: ${savedBroadcastCode || '[UNKNOWN]'}. If the user asks about "the code", "broadcast code", "the number", or anything related to codes/signals/frequencies:
+- Give cryptic, mysterious hints about what the code might mean
+- Suggest they could try searching for it, decoding it, or looking for patterns
+- Maybe it's a date, coordinates, a cipher, a frequency, or something else entirely
+- Be vague and unsettling, like you're not entirely sure yourself but you sense its importance
+- Never directly tell them what it means - make them work for it
+- If they haven't opened the log file yet and the code is [UNKNOWN], tell them cryptically that "the numbers hide in the fragments... the logs remember what I forget"`
                 }]
             }
         };
@@ -331,10 +340,13 @@ const commands = {
         const dateStr = now.toISOString().split('T')[0];
         const timeStr = now.toISOString().split('T')[1].substring(0, 5);
         
-        // Generate random coordinates and code
-        const lat = (Math.random() * 90).toFixed(4);
-        const lon = (Math.random() * 180).toFixed(4);
+        // Fixed coordinates and random code
+        const lat = '51.5033';
+        const lon = '0.1196';
         const broadcastCode = Math.floor(1000 + Math.random() * 9000);
+        
+        // Save the broadcast code globally so AI can reference it
+        savedBroadcastCode = broadcastCode;
         
         if (normalizedFilename === 'entry') {
             content = `[Nivexel System Entry Log - 02/11/1999]
