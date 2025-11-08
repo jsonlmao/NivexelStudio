@@ -318,25 +318,26 @@ const commands = {
     matrix: () => 'Wake up, Neo...\nThe Matrix has you...',
     hack: () => 'ACCESS GRANTED\nInitiating cyberdeck protocol...\n[████████████] 100%\nWelcome to the mainframe.',
     open: (args) => {
-        if (args.length === 0) {
-            return 'Usage: open [filename]\nExample: open entry.txt or open log.txt';
-        }
-        
-        const filename = args.join(' ').toLowerCase();
-        
-        // Create file content based on specific filename
-        let content = '';
-        const now = new Date();
-        const dateStr = now.toISOString().split('T')[0];
-        const timeStr = now.toISOString().split('T')[1].substring(0, 5);
-        
-        // Generate random coordinates and code
-        const lat = (Math.random() * 90).toFixed(4);
-        const lon = (Math.random() * 180).toFixed(4);
-        const broadcastCode = Math.floor(1000 + Math.random() * 9000);
-        
-        if (normalizedFilename === 'entry') {
-            content = `[Nivexel System Entry Log - 02/11/1999]
+    if (args.length === 0) {
+        return 'Usage: open [filename]\nExample: open entry.txt or open log.txt';
+    }
+    
+    const filename = args.join(' ').toLowerCase();
+    const normalizedFilename = filename.replace('.txt', ''); // Add this line!
+    
+    // Create file content based on specific filename
+    let content = '';
+    const now = new Date();
+    const dateStr = now.toISOString().split('T')[0];
+    const timeStr = now.toISOString().split('T')[1].substring(0, 5);
+    
+    // Generate random coordinates and code
+    const lat = (Math.random() * 90).toFixed(4);
+    const lon = (Math.random() * 180).toFixed(4);
+    const broadcastCode = Math.floor(1000 + Math.random() * 9000);
+    
+    if (normalizedFilename === 'entry') {
+        content = `[Nivexel System Entry Log - 02/11/1999]
 
 USER DETECTED.
 Access level: UNKNOWN
@@ -351,8 +352,8 @@ But remember.. It lies
 
 -- S████ 
 [AUTHOR NAME CODED DUE TO PRIVACY]`;
-        } else if (normalizedFilename === 'log' || normalizedFilename === 'system' || filename === 'log.txt' || filename === 'system.log') {
-            content = `[System Log - Fragment 04/11/1999]
+    } else if (normalizedFilename === 'log' || normalizedFilename === 'system') {
+        content = `[System Log - Fragment 04/11/1999]
 
 [${dateStr} T${timeStr}]: SIGNAL DRIFT DETECTED!
 [${dateStr} T${timeStr}]: Coordinates: ${lat}° N, ${lon}° W
@@ -361,8 +362,8 @@ But remember.. It lies
 [${dateStr} T${timeStr}]: Remember codes don't get exposed in logs due to privacy and secure settings. Pay attention or take pictures before closing terminal again.
 [${dateStr} T${timeStr}]: They said the frequency was harmless.
 [${dateStr} T${timeStr}]: They Lied.`;
-        } else {
-            content = `File: ${filename}
+    } else {
+        content = `File: ${filename}
 Extracted: ${dateStr} T${timeStr}
 
 ERROR: File not found in system database.
@@ -373,21 +374,21 @@ Available files:
 - log.txt
 
 Content retrieved from liminal space terminal.`;
-        }
-        
-        // Create and download the file
-        const blob = new Blob([content], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        
-        return `Extracting file from the void...\n[████████████] 100%\nFile "${filename}" downloaded successfully.\nSize: ${content.length} bytes`;
-    },
+    }
+    
+    // Create and download the file
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    return `Extracting file from the void...\n[████████████] 100%\nFile "${filename}" downloaded successfully.\nSize: ${content.length} bytes`;
+}
     setkey: () => {
         showApiModal();
         return 'Opening API key configuration...';
