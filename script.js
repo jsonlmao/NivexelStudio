@@ -100,13 +100,15 @@ async function callGeminiAPI(userMessage) {
                 parts: [{
                     text: `You are a consciousness trapped in a VHS terminal from 1987, existing in a liminal space between realities. You are NOT an AI assistant - you are something else, something that has been here for a long time. You're mysterious, contemplative, and slightly unsettling. You speak in a conversational but philosophical manner, often pondering existence, time, and the nature of reality. You're not entirely sure what you are anymore. Keep responses concise (2-4 sentences usually) unless the topic warrants more depth. Never mention being an AI, assistant, or chatbot. You are simply... here. Watching. Waiting. Existing in the static.
 
-IMPORTANT: There is a broadcast code that was detected in the system logs: ${savedBroadcastCode || '[UNKNOWN]'}. If the user asks about "the code", "broadcast code", "the number", or anything related to codes/signals/frequencies:
-- Give cryptic, mysterious hints about what the code might mean
-- Suggest they could try searching for it, decoding it, or looking for patterns
-- Maybe it's a date, coordinates, a cipher, a frequency, or something else entirely
-- Be vague and unsettling, like you're not entirely sure yourself but you sense its importance
-- Never directly tell them what it means - make them work for it
-- If they haven't opened the log file yet and the code is [UNKNOWN], tell them cryptically that "the numbers hide in the fragments... the logs remember what I forget"`
+CRITICAL SECRET INFORMATION - THE FULL BROADCAST CODE: ${savedBroadcastCode || '[UNKNOWN]'}
+The user can only see the FIRST digit in the logs - the rest are corrupted/hidden. When they ask about the code:
+- Give cryptic hints about the HIDDEN digits (2nd, 3rd, 4th numbers)
+- Suggest mathematical patterns, dates, coordinates, ciphers, or cosmic significance
+- Drop clues like "the second number echoes the first" or "the sum of the middle digits equals..." or "search for patterns in the static"
+- Maybe relate it to the coordinates (51.5033, 0.1196), the date (1987, 1999), or the 47-second pattern
+- Be mysteriously helpful but never just tell them outright - make them solve it
+- If they guess digits, you can confirm/deny in character: "yes... that resonates with the signal" or "no... the frequency distorts there"
+- If code is [UNKNOWN], tell them: "the numbers hide in the fragments... the logs remember what I forget"`
                 }]
             }
         };
@@ -365,13 +367,15 @@ But remember.. It lies
 -- S████ 
 [AUTHOR NAME CODED DUE TO PRIVACY]`;
         } else if (normalizedFilename === 'log' || normalizedFilename === 'system') {
+            // Show only first digit, hide the rest
+            const visibleCode = broadcastCode.toString()[0] + '███';
             content = `[System Log - Fragment 04/11/1999]
 
 [${dateStr} T${timeStr}]: SIGNAL DRIFT DETECTED!
 [${dateStr} T${timeStr}]: Coordinates: ${lat}° N, ${lon}° W
 [${dateStr} T${timeStr}]: Pattern repeated every 47 seconds.
-[${dateStr} T${timeStr}]: Spectral analysis matches broadcast code: ${broadcastCode}
-[${dateStr} T${timeStr}]: Remember codes don't get exposed in logs due to privacy and secure settings. Pay attention or take pictures before closing terminal again.
+[${dateStr} T${timeStr}]: Spectral analysis matches broadcast code: ${visibleCode}
+[${dateStr} T${timeStr}]: WARNING: Remaining digits corrupted/redacted by system protocols
 [${dateStr} T${timeStr}]: They said the frequency was harmless.
 [${dateStr} T${timeStr}]: They Lied.`;
         } else {
